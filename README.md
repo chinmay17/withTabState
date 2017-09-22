@@ -7,7 +7,7 @@
 
 * [`options`] *(Object)* If specified, further customizes the behavior of the connector. It accepts these additional options:
   * [`viewStateName`] *(String)*: **Highly recommended to specify it.** Used for making the key for storing the payload in the Redux's store state.
-  * [`shouldStoreScroll`] *(Boolean)*: When true, injects a function `setScrollContainerRef`. Use it on the element for which you want to store the scroll position. It will take care of restoring the scroll position ( no callbacks needed ). If you want to just maintain the scroll position without saving any state, pass `mapPropsToViewState` as `null` or `undefined`.
+  * [`shouldStoreScroll`] *(Boolean)*: When true, injects a function `setScrollContainerRef`. Use it on the element for which you want to store the scroll position. It will take care of restoring the scroll position ( no callbacks needed ). If you want to just maintain the scroll position without saving any state, pass `mapPropsToViewState` as `null` or `undefined`.
 
 
 #### Storing `state`
