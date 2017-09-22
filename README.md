@@ -136,6 +136,7 @@ const MyComponent = props => (
             onAction={props.onAction}
           />
       )}
+   </div>
 );
 
 MyComponent.defaultProps = { selectedItemIds: {} };
