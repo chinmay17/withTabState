@@ -1,5 +1,5 @@
 ### `withViewState([mapPropsToViewState], [options])`
-HOC that saves, loads and resets data extracted from the ** props ** in the `viewState` reducer on tab switch.
+HOC that saves, loads and resets data extracted from the **props** in the `viewState` reducer on tab switch.
 *returns* a new, component class.
 
 #### Arguments
