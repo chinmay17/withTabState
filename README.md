@@ -148,6 +148,8 @@ export default compose(
   )(Mycomponent);
 ```
 
+![wvs_mini.png](https://github.com/chinmay17/withViewState/blob/master/wvs_mini.png?raw=true)
+
 #### Restoring scroll
 
 ```javascript
