@@ -102,13 +102,13 @@ const TodoList = props => (
       )}
 );
 const mapPropsToViewState = props => _pick(props, 'selectedTodoIds');
-export default withViewState(mapPropsToViewState, {viewStateName: 'TodoList'} )(Mycomponent);
+export default withViewState(mapPropsToViewState, {viewStateName: 'TodoList'} )(TodoList);
 ```
 
 Solution 2
 1. Use `connectActionsAndViewState`
 
-myComponentHandlers.js
+todoListHandlers.js
 
 ```javascript
 
@@ -143,9 +143,9 @@ TodoList.defaultProps = { selectedTodoIds: {} };
 
 const mapPropsToViewState = props => _pick(props, 'selectedTodoIds');
 export default compose(
-  connectActionsWithViewState(myComponentActionHandlers),
+  connectActionsWithViewState(todoListActionHandlers),
   withViewState(mapPropsToViewState, {viewStateName: 'TodoList'} )
-  )(Mycomponent);
+  )(TodoList);
 ```
 
 ![wvs_mini.png](https://github.com/chinmay17/withViewState/blob/master/wvs_mini.png?raw=true)
