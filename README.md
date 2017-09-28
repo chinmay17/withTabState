@@ -14,15 +14,15 @@ HOC that saves, loads and resets data extracted from the **props** in the `viewS
 #### Storing `state`
 
 ```javascript
-class MyComponent extends React.PureComponent {
-  state = { selectedItemIds: {} };
+class TodoList extends React.PureComponent {
+  state = { selectedTodoIds: {} };
   
   handleAction = action => {
     switch(action.type){
-      case 'MY_ITEM_SELECTED':
+      case 'TODO_SELECTED':
         this.setState({
-          selectedItemIds: { 
-            ...this.state.selectedItemIds,
+          selectedTodoIds: { 
+            ...this.state.selectedTodoIds,
             [action.payload.id] : true,
           },
         });
@@ -35,11 +35,11 @@ class MyComponent extends React.PureComponent {
   render(){
     return (
     <div>
-      {this.props.items.map(item => ( 
-          <MyItem
-            key={item.id}
-            item={item}
-            selected={this.state.selectedItemIds[item.id]}
+      {this.props.todos.map(todo => ( 
+          <Todo
+            key={todo.id}
+            todo={todo}
+            selected={this.state.selectedTodoIds[todo.id]}
             onAction={this.handleAction}
           />
       )}
@@ -49,25 +49,25 @@ class MyComponent extends React.PureComponent {
 }
 ```
 
-We want to store the `selectedItemIds`, on switching the tab and get it back on switching back to the tab.
+We want to store the `selectedTodoIds`, on switching the tab and get it back on switching back to the tab.
 
 
 Solution 1
 
-1. Make `MyComponentContainer`.
+1. Make `TodoListContainer`.
 2. Pass down the entire state.
 3. Pass down `onAction`.
 
 ```javascript
-class MyComponentContainer extends React.PureComponent {
-  state = { selectedItemIds: {} };
+class TodoListContainer extends React.PureComponent {
+  state = { selectedTodoIds: {} };
   
   handleAction = action => {
     switch(action.type){
-      case 'MY_ITEM_SELECTED':
+      case 'TODO_SELECTED':
         this.setState({
-          selectedItemIds: { 
-            ...this.state.selectedItemIds,
+          selectedTodoIds: { 
+            ...this.state.selectedTodoIds,
             [action.payload.id] : true,
           },
         });
@@ -82,27 +82,27 @@ class MyComponentContainer extends React.PureComponent {
   
   render(){
     return (
-      <MyComponent {...this.props} {...this.state} onAction={this.handleAction} />
+      <TodoList {...this.props} {...this.state} onAction={this.handleAction} />
     );
   }
 }
 ```
 
-MyComponent.js
+TodoList.js
 ```javascript
-const MyComponent = props => (
+const TodoList = props => (
   <div>
-      {props.items.map(item => ( 
-          <MyItem
-            key={item.id}
-            item={item}
-            selected={props.selectedItemIds[item.id]}
+      {props.todos.map(todo => ( 
+          <Todo
+            key={todo.id}
+            todo={todo}
+            selected={props.selectedTodoIds[todo.id]}
             onAction={props.onAction}
           />
       )}
 );
-const mapPropsToViewState = props => _pick(props, 'selectedItemIds');
-export default withViewState(mapPropsToViewState, {viewStateName: 'MyComponent'} )(Mycomponent);
+const mapPropsToViewState = props => _pick(props, 'selectedTodoIds');
+export default withViewState(mapPropsToViewState, {viewStateName: 'TodoList'} )(Mycomponent);
 ```
 
 Solution 2
@@ -113,10 +113,10 @@ myComponentHandlers.js
 ```javascript
 
 export default {
-  MY_ITEM_SELECTED(action, {getState, setState}) {
+  TODO_SELECTED(action, {getState, setState}) {
     setState({
-      selectedItemIds: { 
-        ...(getState().selectedItemIds || {}),
+      selectedTodoIds: { 
+        ...(getState().selectedTodoIds || {}),
         [action.payload.id] : true,
       },
     });
@@ -124,27 +124,27 @@ export default {
 }
 ```
 
-MyComponent.js
+TodoList.js
 ```javascript
-const MyComponent = props => (
+const TodoList = props => (
   <div>
-      {props.items.map(item => ( 
-          <MyItem
-            key={item.id}
-            item={item}
-            selected={props.selectedItemIds[item.id]}
+      {props.todos.map(todo => ( 
+          <Todo
+            key={todo.id}
+            todo={todo}
+            selected={props.selectedTodoIds[todo.id]}
             onAction={props.onAction}
           />
       )}
    </div>
 );
 
-MyComponent.defaultProps = { selectedItemIds: {} };
+TodoList.defaultProps = { selectedTodoIds: {} };
 
-const mapPropsToViewState = props => _pick(props, 'selectedItemIds');
+const mapPropsToViewState = props => _pick(props, 'selectedTodoIds');
 export default compose(
   connectActionsWithViewState(myComponentActionHandlers),
-  withViewState(mapPropsToViewState, {viewStateName: 'MyComponent'} )
+  withViewState(mapPropsToViewState, {viewStateName: 'TodoList'} )
   )(Mycomponent);
 ```
 
