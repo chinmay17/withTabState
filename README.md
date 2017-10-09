@@ -148,7 +148,7 @@ export default compose(
   )(TodoList);
 ```
 
-![wvs_mini-todo.png](https://github.com/chinmay17/withTabState/blob/master/wvs_mini-todo.png?raw=true)
+![wTS_transparent-todo-mini.png](https://github.com/chinmay17/withTabState/blob/master/wTS_transparent-todo-mini.png?raw=true)
 
 #### Restoring scroll
 
