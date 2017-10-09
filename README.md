@@ -1,14 +1,14 @@
-### `withViewState([mapPropsToViewState], [options])`
-HOC that saves, loads and resets data extracted from the **props** in the `viewState` reducer on tab switch.
+### `withTabState([mapPropsToTabState], [options])`
+HOC that saves, loads and resets data extracted from the **props** in the `tabState` reducer on tab switch.
 *returns* a new, component class.
 
 #### Arguments
 
-* [`mapPropsToViewState(ownProps): viewState`] \(*Function*): If this argument is specified, the new component while saving the `viewState`, will call `mapPropsToViewState` with `ownProps`. The results of `mapPropsToViewState` must be a plain object (serves as payload), which will be merged into the `viewState` stored in the redux-store. Every time, the `viewState` is picked up from the redux-store, the callback `onAction`( should be passed down as a prop ) will be called with `{ type: 'VIEW_STATE_UPDATED', payload }`.
+* [`mapPropsToTabState(ownProps): tabState`] \(*Function*): If this argument is specified, the new component while saving the `tabState`, will call `mapPropsToTabState` with `ownProps`. The results of `mapPropsToTabState` must be a plain object (serves as payload), which will be merged into the `tabState` stored in the redux-store. Every time, the `tabState` is picked up from the redux-store, the callback `onAction`( should be passed down as a prop ) will be called with `{ type: 'VIEW_STATE_UPDATED', payload }`.
 
 * [`options`] *(Object)* If specified, further customizes the behavior of the connector. It accepts these additional options:
-  * [`viewStateName`] *(String)*: **Highly recommended to specify it.** Used for making the key for storing the payload in the Redux's store state.
-  * [`shouldStoreScroll`] *(Boolean)*: When true, injects a function `setScrollContainerRef`. Use it on the element for which you want to store the scroll position. It will take care of restoring the scroll position ( no callbacks needed ). If you want to just maintain the scroll position without saving any state, pass `mapPropsToViewState` as `null` or `undefined`.
+  * [`tabStateName`] *(String)*: **Highly recommended to specify it.** Used for making the key for storing the payload in the Redux's store state.
+  * [`shouldStoreScroll`] *(Boolean)*: When true, injects a function `setScrollContainerRef`. Use it on the element for which you want to store the scroll position. It will take care of restoring the scroll position ( no callbacks needed ). If you want to just maintain the scroll position without saving any state, pass `mapPropsToTabState` as `null` or `undefined`.
 
 
 #### Storing `state`
@@ -101,12 +101,12 @@ const TodoList = props => (
           />
       )}
 );
-const mapPropsToViewState = props => _pick(props, 'selectedTodoIds');
-export default withViewState(mapPropsToViewState, {viewStateName: 'TodoList'} )(TodoList);
+const mapPropsToTabState = props => _pick(props, 'selectedTodoIds');
+export default withTabState(mapPropsToTabState, {tabStateName: 'TodoList'} )(TodoList);
 ```
 
 Solution 2
-1. Use `connectActionsAndViewState`
+1. Use `connectActionsAndTabState`
 
 todoListHandlers.js
 
@@ -141,14 +141,14 @@ const TodoList = props => (
 
 TodoList.defaultProps = { selectedTodoIds: {} };
 
-const mapPropsToViewState = props => _pick(props, 'selectedTodoIds');
+const mapPropsToTabState = props => _pick(props, 'selectedTodoIds');
 export default compose(
-  connectActionsWithViewState(todoListActionHandlers),
-  withViewState(mapPropsToViewState, {viewStateName: 'TodoList'} )
+  connectActionsWithTabState(todoListActionHandlers),
+  withTabState(mapPropsToTabState, {tabStateName: 'TodoList'} )
   )(TodoList);
 ```
 
-![wvs_mini-todo.png](https://github.com/chinmay17/withViewState/blob/master/wvs_mini-todo.png?raw=true)
+![wvs_mini-todo.png](https://github.com/chinmay17/withTabState/blob/master/wvs_mini-todo.png?raw=true)
 
 #### Restoring scroll
 
@@ -163,8 +163,8 @@ class MyScrollableComponent extends React.PureComponent {
   }
 }
 
-export default withViewState(null, {
-  viewStateName: 'MyScrollableComponent',
+export default withTabState(null, {
+  tabStateName: 'MyScrollableComponent',
   shouldStoreScroll: true,
 })(MyScrollableComponent);
 ```
