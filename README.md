@@ -1,10 +1,10 @@
-### `withTabState([mapPropsToTabState], [options])`
+### `withTabState(mapPropsToTabState[,options])`
 HOC that saves, loads and resets data extracted from the **props** in the `tabState` reducer on tab switch.
 *returns* a new, component class.
 
 #### Arguments
 
-* [`mapPropsToTabState(ownProps): tabState`] \(*Function*): If this argument is specified, the new component while saving the `tabState`, will call `mapPropsToTabState` with `ownProps`. The results of `mapPropsToTabState` must be a plain object (serves as payload), which will be merged into the `tabState` stored in the redux-store. Every time, the `tabState` is picked up from the redux-store, the callback `onAction`( should be passed down as a prop ) will be called with `{ type: 'VIEW_STATE_UPDATED', payload }`.
+* [`mapPropsToTabState(ownProps): tabState`] \(*Function*): The returned component, while saving the `tabState`, will call `mapPropsToTabState` with `ownProps`. The results of `mapPropsToTabState` must be a plain object (serves as payload), which will be merged into the `tabState` stored in the redux-store. Every time, the `tabState` is picked up from the redux-store, the callback `onAction`( should be passed down as a prop ) will be called with `{ type: 'VIEW_STATE_UPDATED', payload }`.
 
 * [`options`] *(Object)* If specified, further customizes the behavior of the connector. It accepts these additional options:
   * [`tabStateName`] *(String)*: **Highly recommended to specify it.** Used for making the key for storing the payload in the Redux's store state.
@@ -148,7 +148,7 @@ export default compose(
   )(TodoList);
 ```
 
-![wTS_transparent-todo-mini.png](https://github.com/chinmay17/withTabState/blob/master/wTS_transparent-todo-mini.png?raw=true)
+![tabStateProvider-sm.png](https://github.com/chinmay17/withTabState/blob/master/tabStateProvider-sm.png?raw=true)
 
 #### Restoring scroll
 
